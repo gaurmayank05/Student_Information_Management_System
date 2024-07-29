@@ -1,0 +1,53 @@
+/* Container for the student list page */
+.student-list {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 30px;
+  background: #f9f9f9; /* Light gray background */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 80px; /* Space for the fixed navbar */
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Ensure borders are collapsed */
+}
+
+table th,
+table td {
+  padding: 12px;
+  border: 1px solid #ddd; /* Light gray border */
+  text-align: left;
+}
+
+table th {
+  background-color: lightgrey; /* Primary blue background */
+  color: black;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternating row background */
+}
+
+table tr:hover {
+  background-color: #ddd; /* Highlight row on hover */
+}
+
+/* Button styling */
+button {
+  background-color: #007bff; /* Primary blue background */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}

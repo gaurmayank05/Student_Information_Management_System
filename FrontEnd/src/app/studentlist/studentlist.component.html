@@ -1,0 +1,29 @@
+<div class="student-list">
+  <h2>Student List</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Gender</th>
+      <th>Roll Number</th>
+      <th>Course</th>
+      <th>Semester</th>
+      <th>Stream</th>
+      <th>Photo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let student of students">
+      <td>{{ student.name }}</td>
+      <td>{{ student.age }}</td>
+      <td>{{ student.gender }}</td>
+      <td>{{ student.rollNumber }}</td>
+      <td>{{ student.course }}</td>
+      <td>{{ student.semester }}</td>
+      <td>{{ student.stream }}</td>
+      <td><img [src]="student.photo" alt="Student Photo" style="width: 50px; height: auto;" /></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
