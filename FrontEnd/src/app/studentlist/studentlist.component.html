@@ -1,0 +1,44 @@
+<div class="student-list">
+  <h2>Student List</h2>
+
+  <!-- Button to fetch and show all students -->
+  <button (click)="fetchAllStudents()">Show All Students</button>
+
+  <!-- Field and buttons for fetching and deleting a single student -->
+  <div>
+    <label for="studentId">Student ID or Roll Number:</label>
+    <input id="studentId" [(ngModel)]="studentId" />
+    <button (click)="fetchStudent()">Fetch Student</button>
+    <button (click)="deleteStudent()">Delete Student</button>
+  </div>
+
+  <!-- Table for displaying the student list -->
+  <table *ngIf="students.length > 0">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Gender</th>
+      <th>Roll Number</th>
+      <th>Course</th>
+      <th>Semester</th>
+      <th>Stream</th>
+      <th>Photo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let student of students">
+      <td>{{ student.id }}</td>
+      <td>{{ student.name }}</td>
+      <td>{{ student.age }}</td>
+      <td>{{ student.gender }}</td>
+      <td>{{ student.rollNumber }}</td>
+      <td>{{ student.course }}</td>
+      <td>{{ student.semester }}</td>
+      <td>{{ student.stream }}</td>
+      <td><img [src]="student.photo" alt="Student Photo" style="width: 50px; height: auto;" /></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

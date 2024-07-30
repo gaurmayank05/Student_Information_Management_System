@@ -1,0 +1,6 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYhg-_COwHJaTBulqqZOa_zoNgwR3Sj9L-uQ&s') no-repeat center center fixed;
+  background-size: cover;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}

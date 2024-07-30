@@ -1,0 +1,135 @@
+<!-- Registration Form -->
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="registration-form">
+
+  <!-- Name Field -->
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name" type="text" />
+    <div *ngIf="registrationForm.get('name')?.touched && registrationForm.get('name')?.invalid" class="error-message">
+      <div *ngIf="registrationForm.get('name')?.errors?.['required']">
+        Name is required.
+      </div>
+      <div *ngIf="registrationForm.get('name')?.errors?.['invalidName']">
+        Name must only contain letters and spaces.
+      </div>
+    </div>
+  </div>
+
+  <!-- Age Field -->
+  <div>
+    <label for="age">Age:</label>
+    <input id="age" formControlName="age" type="number" />
+    <div *ngIf="registrationForm.get('age')?.touched && registrationForm.get('age')?.invalid" class="error-message">
+      <div *ngIf="registrationForm.get('age')?.errors?.['required']">
+        Age is required.
+      </div>
+      <div *ngIf="registrationForm.get('age')?.errors?.['min']">
+        Age must be greater than 0.
+      </div>
+      <div *ngIf="registrationForm.get('age')?.errors?.['max']">
+        Age must be less than 150.
+      </div>
+    </div>
+  </div>
+
+  <!-- Gender Field -->
+  <div>
+    <label>Gender:</label>
+    <div>
+      <input id="male" type="radio" formControlName="gender" value="Male" />
+      <label for="male">Male</label>
+    </div>
+    <div>
+      <input id="female" type="radio" formControlName="gender" value="Female" />
+      <label for="female">Female</label>
+    </div>
+    <div>
+      <input id="other" type="radio" formControlName="gender" value="Other" />
+      <label for="other">Other</label>
+    </div>
+    <div *ngIf="registrationForm.get('gender')?.touched && registrationForm.get('gender')?.invalid" class="error-message">
+      <div *ngIf="registrationForm.get('gender')?.errors?.['required']">
+        Gender is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Roll Number Field -->
+  <div>
+    <label for="rollNumber">Roll Number:</label>
+    <input id="rollNumber" formControlName="rollNumber" type="text" />
+    <div *ngIf="registrationForm.get('rollNumber')?.touched && registrationForm.get('rollNumber')?.invalid" class="error-message">
+      <div *ngIf="registrationForm.get('rollNumber')?.errors?.['required']">
+        Roll Number is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Field -->
+  <div>
+    <label for="course">Course:</label>
+    <select id="course" formControlName="course" (change)="onCourseChange($event)">
+      <option value="">Select a course</option>
+      <option *ngFor="let course of courses" [value]="course">{{ course }}</option>
+    </select>
+    <div *ngIf="registrationForm.get('course')?.touched && registrationForm.get('course')?.invalid" class="error-message">
+      <div *ngIf="registrationForm.get('course')?.errors?.['required']">
+        Course is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Semester Field -->
+  <div>
+    <label for="semester">Semester:</label>
+    <select id="semester" formControlName="semester">
+      <option value="">Select a semester</option>
+      <option *ngFor="let semester of semesters" [value]="semester">{{ semester }}</option>
+    </select>
+    <div *ngIf="registrationForm.get('semester')?.touched && registrationForm.get('semester')?.invalid" class="error-message">
+      <div *ngIf="registrationForm.get('semester')?.errors?.['required']">
+        Semester is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Stream Field -->
+  <div *ngIf="isStreamVisible">
+    <label for="stream">Stream:</label>
+    <select id="stream" formControlName="stream">
+      <option value="">Select a stream</option>
+      <option *ngFor="let stream of streams" [value]="stream">{{ stream }}</option>
+    </select>
+    <div *ngIf="registrationForm.get('stream')?.touched && registrationForm.get('stream')?.invalid" class="error-message">
+      <div *ngIf="registrationForm.get('stream')?.errors?.['required']">
+        Stream is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo Field -->
+  <div>
+    <label for="photo">Student Photo:</label>
+    <div class="photo-preview">
+      <img *ngIf="photoPreview" [src]="photoPreview" alt="Student Photo Preview" />
+      <div *ngIf="!photoPreview" class="photo-placeholder">Photo Preview</div>
+    </div>
+    <input id="photo" type="file" (change)="onFileChange($event)" />
+    <div *ngIf="photoError" class="error-message">{{ photoError }}</div>
+  </div>
+
+  <!-- Additional Documents Field -->
+  <div>
+    <label for="documents">Additional Documents:</label>
+    <input id="documents" type="file" (change)="onDocumentsChange($event)" multiple />
+    <div class="document-preview">
+      <ul *ngIf="documentNames.length">
+        <li *ngFor="let document of documentNames">{{ document }}</li>
+      </ul>
+      <div *ngIf="documentError" class="error-message">{{ documentError }}</div>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" [disabled]="registrationForm.invalid">Submit</button>
+</form>

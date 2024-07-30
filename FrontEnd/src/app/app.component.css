@@ -1,0 +1,103 @@
+/* Global background image */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYhg-_COwHJaTBulqqZOa_zoNgwR3Sj9L-uQ&s') no-repeat center center fixed;
+  background-size: cover;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Container for the entire app to ensure content is readable */
+.app-container {
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 100px; /* To avoid overlap with navbar */
+  max-width: 1200px;
+  margin: 100px auto 0 auto; /* Center align and avoid overlap with navbar */
+}
+
+/* Navbar container styling */
+.navbar {
+  background: rgb(106, 90, 205); /* Solid blue */
+  padding: 15px 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%; /* Ensure navbar fits the screen */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure navbar is on top */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Navbar logo */
+.navbar-logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Navbar links styling */
+.navbar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links li {
+  margin: 0;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.navbar-links a:hover {
+  color: #e2e2e2;
+  border-bottom: 2px solid #e2e2e2;
+}
+
+.active-link {
+  border-bottom: 2px solid #e2e2e2;
+}
+
+/* Registration Form Styling */
+.registration-form {
+  background: rgba(255, 255, 255, 0.8); /* Make form background semi-transparent */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.registration-form label {
+  font-weight: bold;
+}
+
+.registration-form input, .registration-form select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.registration-form input[type="radio"] {
+  width: auto;
+}
+
+.registration-form .error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
