@@ -6,9 +6,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.developer.Student_Management.entity.Student;
+import com.developer.Student_Management.repository.StudentRepository;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/students")
