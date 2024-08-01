@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+
 
 @Component({
   selector: 'app-studentlist',
@@ -15,7 +18,7 @@ export class StudentListComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.fetchAllStudents(); // Optionally fetch all students on init
+    // this.fetchAllStudents(); // Optionally fetch all students on init
   }
 
   fetchAllStudents(): void {
@@ -30,11 +33,14 @@ export class StudentListComponent implements OnInit {
       return;
     }
 
-    this.http.get<any>(`${this.apiUrl}/${this.studentId}`).subscribe(data => {
-      this.students = [data]; // Display the single student in the table
-    }, error => {
+    this.http.get<any>(`${this.apiUrl}/${this.studentId}`).pipe(tap(student => {
+      this.students = [student];}), // Display the single student in the table
+     catchError(error => {
       alert('Student not found.');
-    });
+       console.error('Error fetching student', error);
+      return of (null);
+    })
+    ).subscribe();
   }
 
   deleteStudent(): void {
@@ -43,11 +49,15 @@ export class StudentListComponent implements OnInit {
       return;
     }
 
-    this.http.delete(`${this.apiUrl}/${this.studentId}`).subscribe(() => {
+    this.http.delete(`${this.apiUrl}/${this.studentId}`).pipe(tap(() => {
       alert('Student deleted successfully.');
       this.fetchAllStudents(); // Refresh the list after deletion
-    }, error => {
+    }),
+        catchError(error => {
       alert('Error deleting student.');
-    });
+      console.error('Error deleting student', error);
+      return of(null);
+    })
+    ).subscribe();
   }
 }

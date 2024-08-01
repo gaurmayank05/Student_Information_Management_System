@@ -48,7 +48,7 @@
       <label for="other">Other</label>
     </div>
     <div *ngIf="registrationForm.get('gender')?.touched && registrationForm.get('gender')?.invalid" class="error-message">
-      <div *ngIf="registrationForm.get('gender')?.errors?.['required']">
+      <div *ngIf="registrationForm.get('gender')?.errors?.['genderRequired']">
         Gender is required.
       </div>
     </div>
@@ -131,5 +131,7 @@
   </div>
 
   <!-- Submit Button -->
-  <button type="submit" [disabled]="registrationForm.invalid">Submit</button>
+  <div class="button-container">
+    <button type="submit" [disabled]="registrationForm.invalid || !registrationForm.dirty">Submit</button>
+  </div>
 </form>

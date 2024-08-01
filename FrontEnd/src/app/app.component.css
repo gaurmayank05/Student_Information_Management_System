@@ -8,30 +8,25 @@ body {
 }
 
 /* Container for the entire app to ensure content is readable */
-.app-container {
-  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-top: 100px; /* To avoid overlap with navbar */
-  max-width: 1200px;
-  margin: 100px auto 0 auto; /* Center align and avoid overlap with navbar */
-}
+/*.app-container {*/
+/*  background: none; !* Semi-transparent white background *!*/
+/*  padding: 20px;*/
+/*  margin-top: 100px; !* To avoid overlap with navbar *!*/
+/*  max-width: 1200px;*/
+/*  margin: 100px auto 0 auto; !* Center align and avoid overlap with navbar *!*/
+/*}*/
 
 /* Navbar container styling */
 .navbar {
-  background: rgb(106, 90, 205); /* Solid blue */
+  background: none; /* Solid blue */
   padding: 15px 30px;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: fixed;
+  /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+  position: relative; /* Change from fixed to relative */
   width: 100%; /* Ensure navbar fits the screen */
-  top: 0;
-  left: 0;
-  z-index: 1000; /* Ensure navbar is on top */
   box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
@@ -71,6 +66,7 @@ body {
 .active-link {
   border-bottom: 2px solid #e2e2e2;
 }
+
 
 /* Registration Form Styling */
 .registration-form {

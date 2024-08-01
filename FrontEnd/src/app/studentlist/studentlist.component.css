@@ -3,36 +3,31 @@
   max-width: 800px;
   margin: 20px auto;
   padding: 30px;
-  background: #f9f9f9; /* Light gray background */
+  background: rgba(249, 249, 249, 0.7); /* Transparent light gray background */
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-top: 80px; /* Space for the fixed navbar */
 }
 
-/* Table styling */
-table {
-  width: 100%;
-  border-collapse: collapse; /* Ensure borders are collapsed */
+/* Input field styling */
+.input-field {
+  height: 44px; /* Match the height of buttons */
+  padding: 0 12px; /* Add horizontal padding */
+  border: 1px solid #ddd; /* Border style */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  max-width: 200px; /* Limit maximum width */
+  flex-grow: 1; /* Allow input to grow */
 }
 
-table th,
-table td {
-  padding: 12px;
-  border: 1px solid #ddd; /* Light gray border */
-  text-align: left;
-}
-
-table th {
-  background-color: lightgrey; /* Primary blue background */
-  color: black;
-}
-
-table tr:nth-child(even) {
-  background-color: #f2f2f2; /* Alternating row background */
-}
-
-table tr:hover {
-  background-color: #ddd; /* Highlight row on hover */
+/* Container for buttons aligned in a row */
+.button-container {
+  display: flex;
+  gap: 10px; /* Space between elements */
+  margin-bottom: 20px; /* Space below the button container */
+  align-items: center; /* Center align items vertically */
+  justify-content: center; /* Center align items horizontally */
 }
 
 /* Button styling */
@@ -50,4 +45,18 @@ button {
 button:hover {
   background-color: #0056b3; /* Darker blue on hover */
   transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+/* Disabled button styling */
+button:disabled {
+  background-color: #d6d6d6; /* Gray background for disabled state */
+  color: #a0a0a0; /* Gray text for disabled state */
+  cursor: not-allowed; /* Change cursor to not-allowed for disabled state */
+  transform: none; /* No scaling effect on hover for disabled button */
+}
+
+/* Specific styling for the "Show All Students" button */
+.show-all-button {
+  display: block;
+  margin: 20px auto; /* Center button horizontally */
 }

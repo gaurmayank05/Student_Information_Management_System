@@ -12,6 +12,15 @@ export function nameValidator(): ValidatorFn {
   };
 }
 
+export function genderValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const gender = control.value;
+    if (!gender) {
+      return { 'genderRequired': true };
+    }
+    return null;
+  };
+}
 @Component({
   selector: 'app-registrationform',
   templateUrl: './registrationform.component.html',
@@ -32,7 +41,7 @@ export class RegistrationformComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: ['', [Validators.required, nameValidator()]],
       age: ['', [Validators.required, Validators.min(1), Validators.max(150)]],
-      gender: ['', Validators.required],
+      gender: ['', [Validators.required, genderValidator()]],
       rollNumber: ['', Validators.required],
       course: ['', Validators.required],
       semester: ['', Validators.required],
@@ -47,6 +56,12 @@ export class RegistrationformComponent implements OnInit {
   onSubmit(): void {
     if (this.registrationForm.valid) {
       console.log('Form Submitted', this.registrationForm.value);
+      alert('Form Submitted');
+      this.registrationForm.reset();
+      this.photoPreview = null;
+      this.photoError = null;
+      this.documentNames = [];
+      this.documentError = null;
     } else {
       alert('Please fill in all required fields.');
     }
