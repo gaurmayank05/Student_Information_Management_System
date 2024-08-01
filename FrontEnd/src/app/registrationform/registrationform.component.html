@@ -56,10 +56,10 @@
 
   <!-- Roll Number Field -->
   <div>
-    <label for="rollNumber">Roll Number:</label>
-    <input id="rollNumber" formControlName="rollNumber" type="text" />
-    <div *ngIf="registrationForm.get('rollNumber')?.touched && registrationForm.get('rollNumber')?.invalid" class="error-message">
-      <div *ngIf="registrationForm.get('rollNumber')?.errors?.['required']">
+    <label for="rollNo">Roll Number:</label>
+    <input id="rollNo" formControlName="rollNo" type="number" />
+    <div *ngIf="registrationForm.get('rollNo')?.touched && registrationForm.get('rollNo')?.invalid" class="error-message">
+      <div *ngIf="registrationForm.get('rollNo')?.errors?.['required']">
         Roll Number is required.
       </div>
     </div>

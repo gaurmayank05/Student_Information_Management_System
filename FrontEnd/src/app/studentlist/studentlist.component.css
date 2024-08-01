@@ -60,3 +60,29 @@ button:disabled {
   display: block;
   margin: 20px auto; /* Center button horizontally */
 }
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Ensure borders are collapsed */
+}
+
+table th,
+table td {
+  padding: 12px;
+  border: 1px solid #ddd; /* Light gray border */
+  text-align: left;
+}
+
+table th {
+  background-color: lightgrey; /* Light gray background for headers */
+  color: black;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternating row background */
+}
+
+table tr:hover {
+  background-color: #ddd; /* Highlight row on hover */
+}

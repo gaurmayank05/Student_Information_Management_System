@@ -21,6 +21,7 @@ export function genderValidator(): ValidatorFn {
     return null;
   };
 }
+
 @Component({
   selector: 'app-registrationform',
   templateUrl: './registrationform.component.html',
@@ -42,11 +43,11 @@ export class RegistrationformComponent implements OnInit {
       name: ['', [Validators.required, nameValidator()]],
       age: ['', [Validators.required, Validators.min(1), Validators.max(150)]],
       gender: ['', [Validators.required, genderValidator()]],
-      rollNumber: ['', Validators.required],
+      rollNo: [null, [Validators.required, Validators.pattern(/^\d+$/)]], // Ensure rollNo is a number
       course: ['', Validators.required],
       semester: ['', Validators.required],
       stream: [''],
-      photo: ['', Validators.required],
+      // photo: ['', Validators.required],
       documents: ['']
     });
   }
@@ -55,11 +56,13 @@ export class RegistrationformComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registrationForm.valid) {
-      console.log('Form Submitted', this.registrationForm.value);
+      // Convert rollNo to a number
+      const formValue = { ...this.registrationForm.value, rollNo: Number(this.registrationForm.value.rollNo) };
+      console.log('Form Submitted', formValue);
       alert('Form Submitted');
       this.registrationForm.reset();
-      this.photoPreview = null;
-      this.photoError = null;
+      // this.photoPreview = null;
+      // this.photoError = null;
       this.documentNames = [];
       this.documentError = null;
     } else {

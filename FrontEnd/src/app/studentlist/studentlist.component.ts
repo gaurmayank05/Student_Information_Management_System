@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-
 @Component({
   selector: 'app-studentlist',
   templateUrl: './studentlist.component.html',
@@ -18,13 +17,22 @@ export class StudentListComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    // this.fetchAllStudents(); // Optionally fetch all students on init
+    // Optionally fetch all students on init
+    // Uncomment if you want to fetch students on component load
+    // this.fetchAllStudents();
   }
 
   fetchAllStudents(): void {
-    this.http.get<any[]>(this.apiUrl).subscribe(data => {
-      this.students = data;
-    });
+    this.http.get<any[]>(this.apiUrl).pipe(
+      tap(data => {
+        console.log('Fetched Students:', data);
+        this.students = data;
+      }),
+      catchError(error => {
+        console.error('Error fetching students', error);
+        return of([]); // Return an empty array on error
+      })
+    ).subscribe();
   }
 
   fetchStudent(): void {
@@ -33,13 +41,15 @@ export class StudentListComponent implements OnInit {
       return;
     }
 
-    this.http.get<any>(`${this.apiUrl}/${this.studentId}`).pipe(tap(student => {
-      this.students = [student];}), // Display the single student in the table
-     catchError(error => {
-      alert('Student not found.');
-       console.error('Error fetching student', error);
-      return of (null);
-    })
+    this.http.get<any>(`${this.apiUrl}/${this.studentId}`).pipe(
+      tap(student => {
+        this.students = [student]; // Display the single student in the table
+      }),
+      catchError(error => {
+        alert('Student not found.');
+        console.error('Error fetching student', error);
+        return of(null); // Ensure observable completes
+      })
     ).subscribe();
   }
 
@@ -49,15 +59,20 @@ export class StudentListComponent implements OnInit {
       return;
     }
 
-    this.http.delete(`${this.apiUrl}/${this.studentId}`).pipe(tap(() => {
-      alert('Student deleted successfully.');
-      this.fetchAllStudents(); // Refresh the list after deletion
-    }),
-        catchError(error => {
-      alert('Error deleting student.');
-      console.error('Error deleting student', error);
-      return of(null);
-    })
-    ).subscribe();
+    this.http.delete(`${this.apiUrl}/${this.studentId}`).pipe(
+      tap(() => {
+        // Fetch all students to refresh the list
+        this.fetchAllStudents();
+        alert('Student deleted successfully.');
+      }),
+      catchError(error => {
+        alert('Error deleting student.');
+        console.error('Error deleting student', error);
+        return of(null); // Ensure observable completes
+      })
+    ).subscribe({
+      next: () => console.log('Delete operation completed successfully'),
+      error: (err) => console.error('Subscription error', err)
+    });
   }
 }
