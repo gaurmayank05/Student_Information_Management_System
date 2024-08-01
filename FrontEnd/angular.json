@@ -70,7 +70,8 @@
               "buildTarget": "StudentInfoSystem:build:production"
             },
             "development": {
-              "buildTarget": "StudentInfoSystem:build:development"
+              "buildTarget": "StudentInfoSystem:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
