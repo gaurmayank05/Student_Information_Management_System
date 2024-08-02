@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { HttpClient } from '@angular/common/http'; // Import HttpClient
 
 // Custom Validator Function
 export function nameValidator(): ValidatorFn {
@@ -38,16 +39,17 @@ export class RegistrationformComponent implements OnInit {
   documentNames: string[] = [];
   documentError: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  private apiUrl = 'http://localhost:8080/api/students'; // Your API endpoint
+
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.registrationForm = this.fb.group({
       name: ['', [Validators.required, nameValidator()]],
       age: ['', [Validators.required, Validators.min(1), Validators.max(150)]],
       gender: ['', [Validators.required, genderValidator()]],
-      rollNo: [null, [Validators.required, Validators.pattern(/^\d+$/)]], // Ensure rollNo is a number
+      rollNo: [null, [Validators.required, Validators.pattern(/^\d+$/)]],
       course: ['', Validators.required],
       semester: ['', Validators.required],
       stream: [''],
-      // photo: ['', Validators.required],
       documents: ['']
     });
   }
@@ -58,13 +60,20 @@ export class RegistrationformComponent implements OnInit {
     if (this.registrationForm.valid) {
       // Convert rollNo to a number
       const formValue = { ...this.registrationForm.value, rollNo: Number(this.registrationForm.value.rollNo) };
-      console.log('Form Submitted', formValue);
-      alert('Form Submitted');
-      this.registrationForm.reset();
-      // this.photoPreview = null;
-      // this.photoError = null;
-      this.documentNames = [];
-      this.documentError = null;
+
+      this.http.post(this.apiUrl, formValue).subscribe({
+        next: (response) => {
+          console.log('Form Submitted', response);
+          alert('Form Submitted Successfully');
+          this.registrationForm.reset();
+          this.documentNames = [];
+          this.documentError = null;
+        },
+        error: (err) => {
+          console.error('Submission Error', err);
+          alert('An error occurred while submitting the form.');
+        }
+      });
     } else {
       alert('Please fill in all required fields.');
     }

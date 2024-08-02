@@ -17,8 +17,6 @@ export class StudentListComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    // Optionally fetch all students on init
-    // Uncomment if you want to fetch students on component load
     // this.fetchAllStudents();
   }
 
