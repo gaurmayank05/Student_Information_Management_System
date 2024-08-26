@@ -12,7 +12,86 @@
   <!-- Button to fetch and show all students -->
   <button class="show-all-button" (click)="fetchAllStudents()">Show All Students</button>
 
-  <!-- Table for displaying the student list -->
+  <!-- Form for editing student details -->
+  <div *ngIf="selectedStudent" class="update-form">
+    <h3>Edit Student</h3>
+    <form [formGroup]="registrationForm" (ngSubmit)="updateStudent()">
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" type="text"/>
+      </div>
+
+      <!-- Age Field -->
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input id="age" formControlName="age" type="number"/>
+      </div>
+
+      <!-- Gender Field -->
+      <div class="form-group">
+        <label>Gender:</label>
+        <div class="radio-group">
+          <input id="male" type="radio" formControlName="gender" value="Male"/>
+          <label for="male">Male</label>
+          <input id="female" type="radio" formControlName="gender" value="Female"/>
+          <label for="female">Female</label>
+          <input id="other" type="radio" formControlName="gender" value="Other"/>
+          <label for="other">Other</label>
+        </div>
+      </div>
+
+      <!-- Roll Number Field (readonly) -->
+      <div class="form-group">
+        <label for="rollNo">Roll Number:</label>
+        <input id="rollNo" formControlName="rollNo" type="number" readonly/>
+      </div>
+
+      <!-- Course Field -->
+      <div class="form-group">
+        <label for="course">Course:</label>
+        <select id="course" formControlName="course">
+          <option *ngFor="let course of courses" [value]="course">{{ course }}</option>
+        </select>
+      </div>
+
+      <!-- Semester Field -->
+      <div class="form-group">
+        <label for="semester">Semester:</label>
+        <select id="semester" formControlName="semester">
+          <option *ngFor="let semester of semesters" [value]="semester">{{ semester }}</option>
+        </select>
+      </div>
+
+      <!-- Stream Field -->
+      <div *ngIf="isStreamVisible" class="form-group">
+        <label for="stream">Stream:</label>
+        <select id="stream" formControlName="stream">
+          <option *ngFor="let stream of streams" [value]="stream">{{ stream }}</option>
+        </select>
+      </div>
+
+      <!-- Photo Field -->
+      <div class="form-group">
+        <label for="photo">Student Photo:</label>
+        <input id="photo" type="file" (change)="onFileChange($event)" />
+        <div *ngIf="photoPreview" class="photo-preview">
+          <img [src]="photoPreview" alt="Student Photo Preview"/>
+        </div>
+      </div>
+
+      <!-- Additional Documents Field -->
+      <div class="form-group">
+        <label for="documents">Additional Documents:</label>
+        <input id="documents" type="file" (change)="onDocumentsChange($event)" multiple />
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="registrationForm.invalid">Update Student</button>
+    </form>
+  </div>
+
+  <!-- Table for displaying the student list with an update button -->
   <table *ngIf="students.length > 0">
     <thead>
     <tr>
@@ -25,6 +104,7 @@
       <th>Semester</th>
       <th>Stream</th>
       <th>Photo</th>
+      <th>Actions</th> <!-- Added Actions Column -->
     </tr>
     </thead>
     <tbody>
@@ -37,7 +117,10 @@
       <td>{{ student.course }}</td>
       <td>{{ student.semester }}</td>
       <td>{{ student.stream }}</td>
-      <td><img [src]="student.photo" alt="Student Photo" style="width: 50px; height: auto;" /></td>
+      <td><img [src]="student.photo" alt="Student Photo" class="student-photo"/></td>
+      <td *ngIf="selectedStudent && selectedStudent.id === student.id">
+        <button (click)="updateStudent()">Update</button>
+      </td>
     </tr>
     </tbody>
   </table>
