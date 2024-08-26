@@ -1,10 +1,7 @@
 package com.developer.Student_Management.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -28,4 +25,6 @@ public class Student {
     private String course;
     @Column(name = "stream")
     private String stream;
+    @Column(name = "imagePath")
+    private String imagePath;
 }

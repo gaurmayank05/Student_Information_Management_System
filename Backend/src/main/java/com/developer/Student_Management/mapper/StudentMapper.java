@@ -12,7 +12,8 @@ public class StudentMapper {
                 student.getGender(),
                 student.getRollNo(),
                 student.getCourse(),
-                student.getStream()
+                student.getStream(),
+                student.getImagePath()
         );
     }
 
@@ -24,7 +25,8 @@ public class StudentMapper {
                 studentDto.getGender(),
                 studentDto.getRollNo(),
                 studentDto.getCourse(),
-                studentDto.getStream()
+                studentDto.getStream(),
+                studentDto.getImagePath()
         );
     }
 }
