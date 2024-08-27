@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+// Removed @CrossOrigin annotation
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/students")
@@ -25,14 +25,13 @@ public class StudentController {
     }
 
     // For Retrieving Student
-
     @GetMapping("{id}")
     public ResponseEntity<StudentDto> getStudentById(@PathVariable("id") Long studentId) {
         StudentDto studentDto = studentService.getStudentByID(studentId);
         return ResponseEntity.ok(studentDto);
     }
 
-    // For Retrieving all Student
+    // For Retrieving all Students
     @GetMapping
     public ResponseEntity<List<StudentDto>> getAllStudents() {
         List<StudentDto> student = studentService.getAllStudents();

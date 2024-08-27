@@ -4,7 +4,7 @@
   <!-- Field and buttons for fetching and deleting a single student -->
   <div class="button-container">
     <label for="studentId">Student ID or Roll Number:</label>
-    <input id="studentId" [(ngModel)]="studentId" class="input-field"/>
+    <input id="studentId" [(ngModel)]="studentId" class="input-field" />
     <button (click)="fetchStudent()">Fetch Student</button>
     <button (click)="deleteStudent()">Delete Student</button>
   </div>
@@ -19,24 +19,24 @@
       <!-- Name Field -->
       <div class="form-group">
         <label for="name">Name:</label>
-        <input id="name" formControlName="name" type="text"/>
+        <input id="name" formControlName="name" type="text" />
       </div>
 
       <!-- Age Field -->
       <div class="form-group">
         <label for="age">Age:</label>
-        <input id="age" formControlName="age" type="number"/>
+        <input id="age" formControlName="age" type="number" />
       </div>
 
       <!-- Gender Field -->
       <div class="form-group">
         <label>Gender:</label>
         <div class="radio-group">
-          <input id="male" type="radio" formControlName="gender" value="Male"/>
+          <input id="male" type="radio" formControlName="gender" value="Male" />
           <label for="male">Male</label>
-          <input id="female" type="radio" formControlName="gender" value="Female"/>
+          <input id="female" type="radio" formControlName="gender" value="Female" />
           <label for="female">Female</label>
-          <input id="other" type="radio" formControlName="gender" value="Other"/>
+          <input id="other" type="radio" formControlName="gender" value="Other" />
           <label for="other">Other</label>
         </div>
       </div>
@@ -44,7 +44,7 @@
       <!-- Roll Number Field (readonly) -->
       <div class="form-group">
         <label for="rollNo">Roll Number:</label>
-        <input id="rollNo" formControlName="rollNo" type="number" readonly/>
+        <input id="rollNo" formControlName="rollNo" type="number" readonly />
       </div>
 
       <!-- Course Field -->
@@ -76,7 +76,7 @@
         <label for="photo">Student Photo:</label>
         <input id="photo" type="file" (change)="onFileChange($event)" />
         <div *ngIf="photoPreview" class="photo-preview">
-          <img [src]="photoPreview" alt="Student Photo Preview"/>
+          <img [src]="photoPreview" alt="Student Photo Preview" />
         </div>
       </div>
 
@@ -104,7 +104,7 @@
       <th>Semester</th>
       <th>Stream</th>
       <th>Photo</th>
-      <th>Actions</th> <!-- Added Actions Column -->
+      <th>Actions</th> <!-- Actions Column -->
     </tr>
     </thead>
     <tbody>
@@ -117,9 +117,9 @@
       <td>{{ student.course }}</td>
       <td>{{ student.semester }}</td>
       <td>{{ student.stream }}</td>
-      <td><img [src]="student.photo" alt="Student Photo" class="student-photo"/></td>
-      <td *ngIf="selectedStudent && selectedStudent.id === student.id">
-        <button (click)="updateStudent()">Update</button>
+      <td><img [src]="student.photo" alt="Student Photo" class="student-photo" /></td>
+      <td>
+        <button (click)="selectStudentForUpdate(student)">Edit</button>
       </td>
     </tr>
     </tbody>

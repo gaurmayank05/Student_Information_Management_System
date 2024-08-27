@@ -2,7 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+
+// Custom Validators
+export function nameValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const name = control.value;
+    if (name && /[^a-zA-Z\s]/.test(name)) {
+      return { 'invalidName': true };
+    }
+    return null;
+  };
+}
+
+export function genderValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const gender = control.value;
+    if (!gender) {
+      return { 'genderRequired': true };
+    }
+    return null;
+  };
+}
 
 @Component({
   selector: 'app-studentlist',
@@ -24,18 +45,22 @@ export class StudentListComponent implements OnInit {
 
   constructor(private http: HttpClient, private fb: FormBuilder) {
     this.registrationForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, nameValidator()]],
       age: ['', [Validators.required, Validators.min(1), Validators.max(150)]],
-      gender: ['', Validators.required],
-      rollNo: [{ value: '', disabled: true }, Validators.required],
+      gender: ['', [Validators.required, genderValidator()]],
+      rollNo: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Ensure rollNo is editable
       course: ['', Validators.required],
       semester: ['', Validators.required],
       stream: ['']
     });
+
+    // Watch for changes to the course field
+    this.registrationForm.get('course')?.valueChanges.subscribe(course => this.onCourseChange(course));
   }
 
   ngOnInit(): void {
-    //this.fetchAllStudents();
+    // Uncomment this if you want to fetch all students on initialization
+    // this.fetchAllStudents();
   }
 
   fetchAllStudents(): void {
@@ -60,8 +85,10 @@ export class StudentListComponent implements OnInit {
 
     this.http.get<any>(`${this.apiUrl}/${this.studentId}`).pipe(
       tap(student => {
+        console.log('Fetched Student:', student); // Debugging line
         this.selectedStudent = student;
         this.registrationForm.patchValue(student);
+        console.log('Form Values after patch:', this.registrationForm.value); // Debugging line
         this.photoPreview = student.photo;
         this.isStreamVisible = student.course === 'BSc' || student.course === 'BA' || student.course === 'MA' || student.course === 'MSc';
       }),
@@ -73,10 +100,10 @@ export class StudentListComponent implements OnInit {
     ).subscribe();
   }
 
-
   selectStudentForUpdate(student: any): void {
     this.selectedStudent = student;
     this.registrationForm.patchValue(student);
+    console.log('Form Values after selectStudentForUpdate:', this.registrationForm.value); // Debugging line
     this.photoPreview = student.photo;
     this.isStreamVisible = student.course === 'BSc' || student.course === 'BA' || student.course === 'MA' || student.course === 'MSc';
   }
@@ -84,8 +111,9 @@ export class StudentListComponent implements OnInit {
   updateStudent(): void {
     if (this.registrationForm.valid) {
       const updatedStudent = this.registrationForm.value;
+      const studentId = this.selectedStudent.id; // Use selectedStudent's ID for update
 
-      this.http.put(`${this.apiUrl}/${this.studentId}`, updatedStudent).pipe(
+      this.http.put(`${this.apiUrl}/${studentId}`, updatedStudent).pipe(
         tap(() => {
           // Fetch all students to refresh the list
           this.fetchAllStudents();
@@ -136,6 +164,13 @@ export class StudentListComponent implements OnInit {
 
   onDocumentsChange(event: any): void {
     // Handle additional documents if needed
+  }
+
+  onCourseChange(course: string): void {
+    this.isStreamVisible = course === 'BSc' || course === 'BA' || course === 'MA' || course === 'MSc';
+    if (!this.isStreamVisible) {
+      this.registrationForm.get('stream')?.setValue('');
+    }
   }
 
   resetForm(): void {
