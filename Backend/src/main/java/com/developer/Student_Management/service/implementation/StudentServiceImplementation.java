@@ -48,6 +48,7 @@ public class StudentServiceImplementation implements StudentService {
         student.setRollNo(updatedStudent.getRollNo());
         student.setCourse(updatedStudent.getCourse());
         student.setStream(updatedStudent.getStream());
+        student.setSemester(updatedStudent.getSemester());
         student.setStudentPhoto(updatedStudent.getStudentPhoto());
         Student updatedStudentData = studentRepository.save(student);
         return StudentMapper.mapToStudentDto(updatedStudentData);

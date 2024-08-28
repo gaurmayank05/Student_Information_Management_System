@@ -5,6 +5,7 @@ import com.developer.Student_Management.dto.StudentDto;
 import java.util.List;
 
 public interface StudentService {
+
     StudentDto createStudent(StudentDto studentDto);
 
     StudentDto getStudentByID(Long id);
