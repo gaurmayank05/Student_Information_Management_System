@@ -17,5 +17,5 @@ public class StudentDto {
     private Long rollNo;
     private String course;
     private String stream;
-    private String imagePath;
+    private String studentPhoto;
 }

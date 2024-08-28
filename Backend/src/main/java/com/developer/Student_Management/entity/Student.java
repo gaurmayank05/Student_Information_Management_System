@@ -25,6 +25,6 @@ public class Student {
     private String course;
     @Column(name = "stream")
     private String stream;
-    @Column(name = "imagePath")
-    private String imagePath;
+    @Column(name = "studentPhoto", length = 2000000)
+    private String studentPhoto;
 }

@@ -39,7 +39,7 @@ export class RegistrationformComponent implements OnInit {
   documentNames: string[] = [];
   documentError: string | null = null;
 
-  private apiUrl = 'http://localhost:8080/api/students'; // Your API endpoint
+  private apiUrl = 'http://localhost:8080/api/students';
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.registrationForm = this.fb.group({
@@ -48,9 +48,10 @@ export class RegistrationformComponent implements OnInit {
       gender: ['', [Validators.required, genderValidator()]],
       rollNo: [null, [Validators.required, Validators.pattern(/^\d+$/)]],
       course: ['', Validators.required],
-      semester: ['', Validators.required],
+      semester: [''],
       stream: [''],
-      documents: ['']
+      studentPhoto: [''],  // We store the Base64 string here
+      documents: [null]
     });
   }
 
@@ -58,10 +59,9 @@ export class RegistrationformComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registrationForm.valid) {
-      // Convert rollNo to a number
-      const formValue = { ...this.registrationForm.value, rollNo: Number(this.registrationForm.value.rollNo) };
+      const formData = this.registrationForm.value;  // No need for FormData, since we're sending the Base64 directly
 
-      this.http.post(this.apiUrl, formValue).subscribe({
+      this.http.post(this.apiUrl, formData).subscribe({
         next: (response) => {
           console.log('Form Submitted', response);
           alert('Form Submitted Successfully');
@@ -95,11 +95,18 @@ export class RegistrationformComponent implements OnInit {
       const allowedTypes = ['image/jpeg', 'image/png'];
       if (!allowedTypes.includes(file.type)) {
         this.photoError = 'Only JPG, JPEG, and PNG files are allowed.';
-        this.registrationForm.get('photo')?.setValue('');
+        this.registrationForm.get('studentPhoto')?.setValue(null);
         this.photoPreview = null;
       } else {
         this.photoError = null;
-        this.registrationForm.get('photo')?.setValue(file);
+
+        // Convert image file to Base64 and store it in the form
+        this.convertFileToBase64(file).then(base64 => {
+          console.log('Base64 String:', base64);
+          this.registrationForm.get('studentPhoto')?.setValue(base64);
+        }).catch(err => {
+          console.error('Error converting file to Base64:', err);
+        });
 
         const reader = new FileReader();
         reader.onload = () => {
@@ -127,5 +134,18 @@ export class RegistrationformComponent implements OnInit {
     });
 
     this.registrationForm.get('documents')?.setValue(files);
+  }
+
+  private convertFileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = () => {
+        reject('Error reading file');
+      };
+      reader.readAsDataURL(file);
+    });
   }
 }
