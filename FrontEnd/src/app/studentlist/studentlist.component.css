@@ -153,3 +153,10 @@ input[readonly] {
   border-color: #ddd; /* Gray border */
   cursor: not-allowed; /* Cursor style */
 }
+
+.student-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}

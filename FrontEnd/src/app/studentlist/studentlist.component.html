@@ -117,9 +117,12 @@
       <td>{{ student.course }}</td>
       <td>{{ student.semester }}</td>
       <td>{{ student.stream }}</td>
-      <td><img [src]="student.photo" alt="Student Photo" class="student-photo" /></td>
       <td>
-        <button (click)="selectStudentForUpdate(student)">Edit</button>
+        <img *ngIf="student.photo" [src]="student.photo" alt="Student Photo" class="student-photo" />
+        <span *ngIf="!student.photo">No Photo Available</span>
+      </td>
+      <td>
+        <button (click)="selectStudentForUpdate(student)">Update</button>
       </td>
     </tr>
     </tbody>

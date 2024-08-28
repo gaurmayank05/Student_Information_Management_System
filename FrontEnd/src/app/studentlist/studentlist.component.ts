@@ -46,7 +46,7 @@ export class StudentListComponent implements OnInit {
   constructor(private http: HttpClient, private fb: FormBuilder) {
     this.registrationForm = this.fb.group({
       name: ['', [Validators.required, nameValidator()]],
-      age: ['', [Validators.required, Validators.min(1), Validators.max(150)]],
+      age: ['', [Validators.required, Validators.min(1), Validators.max(30)]],
       gender: ['', [Validators.required, genderValidator()]],
       rollNo: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Ensure rollNo is editable
       course: ['', Validators.required],
@@ -63,42 +63,51 @@ export class StudentListComponent implements OnInit {
     // this.fetchAllStudents();
   }
 
-  fetchAllStudents(): void {
-    this.http.get<any[]>(this.apiUrl).pipe(
-      tap(data => {
-        console.log('Fetched Students:', data);
-        this.students = data;
-        this.resetForm();
-      }),
-      catchError(error => {
-        console.error('Error fetching students', error);
-        return of([]); // Return an empty array on error
-      })
-    ).subscribe();
-  }
+ fetchAllStudents(): void {
+   this.http.get<any[]>(this.apiUrl).pipe(
+     tap(data => {
+       console.log('Fetched Students:', data);
+       this.students = data.map(student => {
+         if (student.studentPhoto) {
+           student.photo = `${student.studentPhoto}`; // Ensure correct formatting
+         }
+         return student;
+       });
+     }),
+     catchError(error => {
+       console.error('Error fetching students', error);
+       return of([]); // Return an empty array on error
+     })
+   ).subscribe();
+ }
 
-  fetchStudent(): void {
-    if (this.studentId.trim() === '') {
-      alert('Please enter a valid student ID or roll number.');
-      return;
-    }
+ fetchStudent(): void {
+   if (this.studentId.trim() === '') {
+     alert('Please enter a valid student ID or roll number.');
+     return;
+   }
 
-    this.http.get<any>(`${this.apiUrl}/${this.studentId}`).pipe(
-      tap(student => {
-        console.log('Fetched Student:', student); // Debugging line
-        this.selectedStudent = student;
-        this.registrationForm.patchValue(student);
-        console.log('Form Values after patch:', this.registrationForm.value); // Debugging line
-        this.photoPreview = student.photo;
-        this.isStreamVisible = student.course === 'BSc' || student.course === 'BA' || student.course === 'MA' || student.course === 'MSc';
-      }),
-      catchError(error => {
-        alert('Student not found.');
-        console.error('Error fetching student', error);
-        return of(null); // Ensure observable completes
-      })
-    ).subscribe();
-  }
+   this.http.get<any>(`${this.apiUrl}/${this.studentId}`).pipe(
+     tap(student => {
+       console.log('Fetched Student:', student); // Debugging line
+       if (student.studentPhoto) {
+         student.photo = `${student.studentPhoto}`; // Ensure correct formatting
+       }
+       this.selectedStudent = student;
+       this.registrationForm.patchValue(student);
+       this.photoPreview = student.photo;
+       this.isStreamVisible = student.course === 'BSc' || student.course === 'BA' || student.course === 'MA' || student.course === 'MSc';
+     }),
+     catchError(error => {
+       alert('Student not found.');
+       console.error('Error fetching student', error);
+       return of(null); // Ensure observable completes
+     })
+   ).subscribe();
+ }
+
+
+
 
   selectStudentForUpdate(student: any): void {
     this.selectedStudent = student;
