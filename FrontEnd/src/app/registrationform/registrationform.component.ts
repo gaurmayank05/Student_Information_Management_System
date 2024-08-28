@@ -32,7 +32,7 @@ export class RegistrationformComponent implements OnInit {
   registrationForm: FormGroup;
   courses: string[] = ['BSc', 'BA', 'BCom', 'BTech', 'MCA', 'MSc', 'MA', 'Mtech'];
   semesters: string[] = ['1st Semester', '2nd Semester', '3rd Semester', '4th Semester', '5th Semester', '6th Semester', '7th Semester', '8th Semester'];
-  streams: string[] = ['Physics', 'Maths', 'Social Science'];
+  streams: string[] = ['Physics', 'Maths', 'Chemistry'];
   isStreamVisible = false;
   photoError: string | null = null;
   photoPreview: string | ArrayBuffer | null = null;
@@ -50,7 +50,7 @@ export class RegistrationformComponent implements OnInit {
       course: ['', Validators.required],
       semester: [''],
       stream: [''],
-      studentPhoto: [''],  // We store the Base64 string here
+      studentPhoto: [''],
       documents: [null]
     });
   }
