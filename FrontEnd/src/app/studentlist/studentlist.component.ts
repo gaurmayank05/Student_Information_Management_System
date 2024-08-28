@@ -37,7 +37,7 @@ export class StudentListComponent implements OnInit {
   registrationForm: FormGroup;
   courses: string[] = ['BSc', 'BA', 'BCom', 'BTech', 'MCA', 'MSc', 'MA', 'Mtech'];
   semesters: string[] = ['1st Semester', '2nd Semester', '3rd Semester', '4th Semester', '5th Semester', '6th Semester', '7th Semester', '8th Semester'];
-  streams: string[] = ['Physics', 'Maths', 'Social Science'];
+  streams: string[] = ['Physics', 'Maths', 'Chemistry'];
   isStreamVisible = false;
   photoPreview: string | ArrayBuffer | null = null;
 
@@ -48,10 +48,11 @@ export class StudentListComponent implements OnInit {
       name: ['', [Validators.required, nameValidator()]],
       age: ['', [Validators.required, Validators.min(1), Validators.max(30)]],
       gender: ['', [Validators.required, genderValidator()]],
-      rollNo: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Ensure rollNo is editable
+      rollNo: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       course: ['', Validators.required],
       semester: ['', Validators.required],
-      stream: ['']
+      stream: [''],
+      studentPhoto: [''],
     });
 
     // Watch for changes to the course field
@@ -59,7 +60,6 @@ export class StudentListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Uncomment this if you want to fetch all students on initialization
     // this.fetchAllStudents();
   }
 
@@ -69,7 +69,7 @@ export class StudentListComponent implements OnInit {
        console.log('Fetched Students:', data);
        this.students = data.map(student => {
          if (student.studentPhoto) {
-           student.photo = `${student.studentPhoto}`; // Ensure correct formatting
+           student.photo = `${student.studentPhoto}`;
          }
          return student;
        });
@@ -161,15 +161,42 @@ export class StudentListComponent implements OnInit {
   }
 
   onFileChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.photoPreview = reader.result;
-      };
-      reader.readAsDataURL(file);
+      const file = event.target.files[0];
+      if (file) {
+        const allowedTypes = ['image/jpeg', 'image/png'];
+        if (!allowedTypes.includes(file.type)) {
+          alert('Only JPG, JPEG, and PNG files are allowed.');
+          this.registrationForm.get('studentPhoto')?.setValue(null);
+          this.photoPreview = null;
+        } else {
+          this.convertFileToBase64(file).then(base64 => {
+            console.log('Base64 String:', base64);
+            this.registrationForm.get('studentPhoto')?.setValue(base64);
+          }).catch(err => {
+            console.error('Error converting file to Base64:', err);
+          });
+
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.photoPreview = reader.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
     }
-  }
+
+    private convertFileToBase64(file: File): Promise<string> {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(reader.result as string);
+        };
+        reader.onerror = () => {
+          reject('Error reading file');
+        };
+        reader.readAsDataURL(file);
+      });
+    }
 
   onDocumentsChange(event: any): void {
     // Handle additional documents if needed
