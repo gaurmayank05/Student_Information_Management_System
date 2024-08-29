@@ -77,7 +77,7 @@ export class StudentListComponent implements OnInit {
      }),
      catchError(error => {
        console.error('Error fetching students', error);
-       return of([]); // Return an empty array on error
+       return of([]);
      })
    ).subscribe();
  }
@@ -90,16 +90,16 @@ export class StudentListComponent implements OnInit {
 
    this.http.get<any>(`${this.apiUrl}/${this.studentId}`).pipe(
      tap(student => {
-       console.log('Fetched Student:', student); // Debugging line
+       console.log('Fetched Student:', student);
        if (student.studentPhoto) {
-         student.photo = `${student.studentPhoto}`; // Ensure correct formatting
+         student.photo = `${student.studentPhoto}`;
        }
        this.students = [student];
      }),
      catchError(error => {
        alert('Student not found.');
        console.error('Error fetching student', error);
-       return of(null); // Ensure observable completes
+       return of(null);
      })
    ).subscribe();
  }
@@ -108,7 +108,7 @@ export class StudentListComponent implements OnInit {
   selectStudentForUpdate(student: any): void {
     this.selectedStudent = student;
     this.registrationForm.patchValue(student);
-    console.log('Form Values after selectStudentForUpdate:', this.registrationForm.value); // Debugging line
+    console.log('Form Values after selectStudentForUpdate:', this.registrationForm.value);
     this.photoPreview = student.photo;
     this.isStreamVisible = student.course === 'BSc' || student.course === 'BA' || student.course === 'MA' || student.course === 'MSc';
   }
@@ -127,7 +127,7 @@ export class StudentListComponent implements OnInit {
         catchError(error => {
           alert('Error updating student.');
           console.error('Error updating student', error);
-          return of(null); // Ensure observable completes
+          return of(null);
         })
       ).subscribe();
     } else {
@@ -146,17 +146,22 @@ export class StudentListComponent implements OnInit {
           tap(() => {
             this.fetchAllStudents();
             alert('Student deleted successfully.');
+            this.resetSearchField();
           }),
           catchError(error => {
             alert('Error deleting student.');
             console.error('Error deleting student', error);
-            return of(null); // Ensure observable completes
+            return of(null);
           })
         ).subscribe();
     }
     else{
         alert("Student not deleted");
     }
+  }
+
+  resetSearchField(): void {
+    this.studentId = ''; // Clear the search input field
   }
 
   onFileChange(event: any): void {
@@ -199,7 +204,7 @@ export class StudentListComponent implements OnInit {
     }
 
   onDocumentsChange(event: any): void {
-    // Handle additional documents if needed
+
   }
 
   onCourseChange(course: string): void {
@@ -214,5 +219,24 @@ export class StudentListComponent implements OnInit {
     this.photoPreview = null;
     this.selectedStudent = null;
     this.isStreamVisible = false;
+  }
+
+  deleteAllStudents(): void {
+    const isConfirm = window.confirm("Are you sure you want to delete all students?");
+    if (isConfirm) {
+      this.http.delete(this.apiUrl).pipe(
+        tap(() => {
+          this.fetchAllStudents();
+          alert('All students deleted successfully.');
+        }),
+        catchError(error => {
+          alert('Error deleting all students.');
+          console.error('Error deleting all students', error);
+          return of(null);
+        })
+      ).subscribe();
+    } else {
+      alert("No students were deleted.");
+    }
   }
 }

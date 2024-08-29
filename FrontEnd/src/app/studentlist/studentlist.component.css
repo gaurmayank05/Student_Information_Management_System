@@ -1,104 +1,164 @@
+/* Import FontAwesome for icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
 /* Container for the student list page */
 .student-list {
   max-width: 1000px;
   margin: 20px auto;
   padding: 30px;
-  background: rgba(249, 249, 249, 0.9); /* Transparent light gray background */
+  background: rgba(249, 249, 249, 0.9);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-top: 80px; /* Space for the fixed navbar */
+  margin-top: 80px;
 }
 
 /* Input field styling */
-.input-field {
-  height: 44px; /* Match the height of buttons */
-  padding: 0 12px; /* Add horizontal padding */
-  border: 1px solid #ddd; /* Border style */
-  border-radius: 4px; /* Rounded corners */
-  font-size: 16px; /* Font size */
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
-  max-width: 200px; /* Limit maximum width */
-  flex-grow: 1; /* Allow input to grow */
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
 }
 
-/* Container for buttons aligned in a row */
-.button-container {
+/* Container for search field and buttons */
+.search-container {
   display: flex;
-  gap: 10px; /* Space between elements */
-  margin-bottom: 20px; /* Space below the button container */
-  align-items: center; /* Center align items vertically */
-  justify-content: center; /* Center align items horizontally */
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+/* Search field styling */
+.search-field {
+  display: flex;
+  align-items: center;
+}
+
+/* Search field input styling */
+.search-field input {
+  height: 44px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  max-width: 200px;
+}
+
+/* Search button styling */
+.search-button {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+  border-radius: 0 4px 4px 0;
+  height: 44px;
+  padding: 0 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button i {
+  font-size: 18px;
 }
 
 /* Button styling */
 button {
-  background-color: #007bff; /* Primary blue background */
+  background-color: #007bff;
   color: white;
-  padding: 12px 20px; /* Ensure buttons are same height as input */
+  padding: 12px 20px;
   border: none;
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
-  height: 44px; /* Match the height of input fields */
-  display: inline-flex; /* Align buttons inline */
-  align-items: center; /* Center align text vertically */
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Show all students button styling */
+.show-all-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 20px;
+  height: 44px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Delete all students button styling */
+.delete-button {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Button hover effects */
 button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  transform: scale(1.05); /* Slightly enlarge button on hover */
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 /* Disabled button styling */
 button:disabled {
-  background-color: #d6d6d6; /* Gray background for disabled state */
-  color: #a0a0a0; /* Gray text for disabled state */
-  cursor: not-allowed; /* Change cursor to not-allowed for disabled state */
-  transform: none; /* No scaling effect on hover for disabled button */
-}
-
-/* Specific styling for the "Show All Students" button */
-.show-all-button {
-  display: block;
-  margin: 20px auto; /* Center button horizontally */
+  background-color: #d6d6d6;
+  color: #a0a0a0;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Table styling */
 table {
   width: 100%;
-  border-collapse: collapse; /* Ensure borders are collapsed */
+  border-collapse: collapse;
 }
 
 table th,
 table td {
   padding: 12px;
-  border: 1px solid #ddd; /* Light gray border */
+  border: 1px solid #ddd;
   text-align: left;
 }
 
 table th {
-  background-color: lightgrey; /* Light gray background for headers */
-  color: black;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
 }
 
 table tr:nth-child(even) {
-  background-color: #f2f2f2; /* Alternating row background */
+  background-color: #f9f9f9;
 }
 
 table tr:hover {
-  background-color: #ddd; /* Highlight row on hover */
+  background-color: #e0e0e0;
 }
 
 /* Form Container for Update Form */
 .update-form {
-  background: #ffffff; /* Solid white background for better readability */
+  background: #ffffff;
   padding: 30px;
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
-  max-width: 700px; /* Increased width for a more spacious form */
-  margin: 20px auto; /* Center align horizontally with margin on top and bottom */
-  border: 1px solid #e0e0e0; /* Light border for subtle separation */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 20px auto;
+  border: 1px solid #e0e0e0;
 }
 
 /* Form Title */
@@ -123,7 +183,7 @@ label {
 input[type="text"],
 input[type="number"],
 select {
-  width: 100%; /* Full width */
+  width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -133,7 +193,7 @@ select {
 /* Radio button group styling */
 .radio-group {
   display: flex;
-  gap: 15px; /* Space between radio buttons */
+  gap: 15px;
 }
 
 /* Preview photo styling */
@@ -142,18 +202,19 @@ select {
 }
 
 .photo-preview img {
-  max-width: 100px; /* Limit photo size */
+  max-width: 100px;
   max-height: 100px;
   border-radius: 4px;
 }
 
 /* Style for disabled input fields */
 input[readonly] {
-  background-color: #f9f9f9; /* Light gray background for readonly fields */
-  border-color: #ddd; /* Gray border */
-  cursor: not-allowed; /* Cursor style */
+  background-color: #f9f9f9;
+  border-color: #ddd;
+  cursor: not-allowed;
 }
 
+/* Student photo styling */
 .student-photo {
   width: 100px;
   height: 100px;
@@ -161,7 +222,54 @@ input[readonly] {
   border-radius: 5px;
 }
 
-h2
-{
-text-align: center;
+h2 {
+  text-align: center;
+}
+
+/* Form button container */
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Update and cancel button styling */
+.form-buttons button {
+  margin: 0;
+}
+
+/* Cancel button styling */
+.cancel-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Icon button styling */
+.icon-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+/* Specific styling for delete button in the table */
+.icon-button.delete-button {
+  color: red;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.icon-button.delete-button:hover {
+  background: white;
 }

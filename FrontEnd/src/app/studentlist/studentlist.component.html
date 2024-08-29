@@ -2,15 +2,16 @@
   <h2>Student List</h2>
 
   <!-- Field and buttons for fetching and deleting a single student -->
-  <div class="button-container">
-    <label for="studentId">Student ID:</label>
-    <input id="studentId" [(ngModel)]="studentId" class="input-field" />
-    <button (click)="fetchStudent()">Fetch Student</button>
-    <!--<button (click)="deleteStudent()">Delete Student</button>-->
+  <div class="search-container">
+    <div class="search-field">
+      <input id="studentId" [(ngModel)]="studentId" placeholder="Enter Student ID" />
+      <button class="search-button" (click)="fetchStudent()">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+    <button class="show-all-button" (click)="fetchAllStudents()">Show All Students</button>
+    <button class="delete-button" (click)="deleteAllStudents()">Delete All Students</button>
   </div>
-
-  <!-- Button to fetch and show all students -->
-  <button class="show-all-button" (click)="fetchAllStudents()">Show All Students</button>
 
   <!-- Form for editing student details -->
   <div *ngIf="selectedStudent" class="update-form">
@@ -86,12 +87,15 @@
         <input id="documents" type="file" (change)="onDocumentsChange($event)" multiple />
       </div>
 
-      <!-- Submit Button -->
-      <button type="submit" [disabled]="registrationForm.invalid">Update Student</button>
+      <!-- Buttons -->
+      <div class="form-buttons">
+        <button type="submit" class="update-button" [disabled]="registrationForm.invalid">Update</button>
+        <button type="button" class="cancel-button" (click)="resetForm()">Cancel</button>
+      </div>
     </form>
   </div>
 
-  <!-- Table for displaying the student list with an update button -->
+  <!-- Table for displaying the student list with icons -->
   <table *ngIf="students.length > 0">
     <thead>
     <tr>
@@ -122,9 +126,12 @@
         <span *ngIf="!student.photo">No Photo Available</span>
       </td>
       <td>
-        <button (click)="selectStudentForUpdate(student)">Update</button>
-        <br><br>
-        <button style="background: red;" (click)="deleteStudent(student)">Delete</button>
+        <button class="icon-button" (click)="selectStudentForUpdate(student)">
+          <i class="fa fa-pencil-alt"></i>
+        </button>
+        <button class="icon-button delete-button" (click)="deleteStudent(student)">
+          <i class="fa fa-trash"></i>
+        </button>
       </td>
     </tr>
     </tbody>

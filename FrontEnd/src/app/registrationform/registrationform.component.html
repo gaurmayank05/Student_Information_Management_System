@@ -124,7 +124,10 @@
     <input id="documents" type="file" (change)="onDocumentsChange($event)" multiple />
     <div class="document-preview">
       <ul *ngIf="documentNames.length">
-        <li *ngFor="let document of documentNames">{{ document }}</li>
+        <li *ngFor="let document of documentNames; let i = index">
+          {{ document }}
+          <button type="button" (click)="removeDocument(i)">Remove</button>
+        </li>
       </ul>
       <div *ngIf="documentError" class="error-message">{{ documentError }}</div>
     </div>

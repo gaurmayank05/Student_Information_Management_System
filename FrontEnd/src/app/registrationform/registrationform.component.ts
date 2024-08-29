@@ -126,16 +126,27 @@ export class RegistrationformComponent implements OnInit {
 
     this.documentNames = [];
     this.documentError = null;
+    const validFiles: File[] = [];
 
-    files.forEach(file => {
-      if (!allowedTypes.includes(file.type)) {
-        this.documentError = 'Only PDF files are allowed.';
-      } else {
-        this.documentNames.push(file.name);
-      }
-    });
+      files.forEach(file => {
+        if (!allowedTypes.includes(file.type)) {
+          this.documentError = 'Only PDF files are allowed.';
+        } else {
+          this.documentNames.push(file.name);
+          validFiles.push(file);
+        }
+      });
 
-    this.registrationForm.get('documents')?.setValue(files);
+      this.registrationForm.get('documents')?.setValue(validFiles);
+  }
+
+  removeDocument(index: number): void {
+    const files = this.registrationForm.get('documents')?.value as File[];
+    if (files && files.length > index) {
+      files.splice(index, 1);
+      this.documentNames.splice(index, 1);
+      this.registrationForm.get('documents')?.setValue(files);
+    }
   }
 
   private convertFileToBase64(file: File): Promise<string> {
