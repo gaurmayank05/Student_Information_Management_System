@@ -93,10 +93,7 @@ export class StudentListComponent implements OnInit {
        if (student.studentPhoto) {
          student.photo = `${student.studentPhoto}`; // Ensure correct formatting
        }
-       this.selectedStudent = student;
-       this.registrationForm.patchValue(student);
-       this.photoPreview = student.photo;
-       this.isStreamVisible = student.course === 'BSc' || student.course === 'BA' || student.course === 'MA' || student.course === 'MSc';
+       this.students = [student];
      }),
      catchError(error => {
        alert('Student not found.');

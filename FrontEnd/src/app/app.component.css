@@ -4,7 +4,7 @@ body {
   font-family: 'Arial', sans-serif;
   background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYhg-_COwHJaTBulqqZOa_zoNgwR3Sj9L-uQ&s') no-repeat center center fixed;
   background-size: cover;
-  overflow-x: hidden; /* Prevent horizontal overflow */
+  overflow-x: hidden;
 }
 
 /* Container for the entire app to ensure content is readable */
@@ -18,16 +18,16 @@ body {
 
 /* Navbar container styling */
 .navbar {
-  background: none; /* Solid blue */
+  background: none;
   padding: 15px 30px;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
-  position: relative; /* Change from fixed to relative */
-  width: 100%; /* Ensure navbar fits the screen */
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Navbar logo */

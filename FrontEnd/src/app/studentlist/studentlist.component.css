@@ -3,7 +3,7 @@
   max-width: 800px;
   margin: 20px auto;
   padding: 30px;
-  background: rgba(249, 249, 249, 0.7); /* Transparent light gray background */
+  background: rgba(249, 249, 249, 0.9); /* Transparent light gray background */
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-top: 80px; /* Space for the fixed navbar */
@@ -159,4 +159,9 @@ input[readonly] {
   height: 100px;
   object-fit: cover;
   border-radius: 5px;
+}
+
+h2
+{
+text-align: center;
 }

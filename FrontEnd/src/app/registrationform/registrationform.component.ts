@@ -59,7 +59,7 @@ export class RegistrationformComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registrationForm.valid) {
-      const formData = this.registrationForm.value;  // No need for FormData, since we're sending the Base64 directly
+      const formData = this.registrationForm.value;
 
       this.http.post(this.apiUrl, formData).subscribe({
         next: (response) => {
