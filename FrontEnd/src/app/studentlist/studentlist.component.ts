@@ -34,6 +34,7 @@ export class StudentListComponent implements OnInit {
   students: any[] = [];
   studentId: string = '';
   selectedStudent: any = null;
+  deletedStudent: any = null;
   registrationForm: FormGroup;
   courses: string[] = ['BSc', 'BA', 'BCom', 'BTech', 'MCA', 'MSc', 'MA', 'Mtech'];
   semesters: string[] = ['1st Semester', '2nd Semester', '3rd Semester', '4th Semester', '5th Semester', '6th Semester', '7th Semester', '8th Semester'];
@@ -104,8 +105,6 @@ export class StudentListComponent implements OnInit {
  }
 
 
-
-
   selectStudentForUpdate(student: any): void {
     this.selectedStudent = student;
     this.registrationForm.patchValue(student);
@@ -117,11 +116,10 @@ export class StudentListComponent implements OnInit {
   updateStudent(): void {
     if (this.registrationForm.valid) {
       const updatedStudent = this.registrationForm.value;
-      const studentId = this.selectedStudent.id; // Use selectedStudent's ID for update
+      const studentId = this.selectedStudent.id;
 
       this.http.put(`${this.apiUrl}/${studentId}`, updatedStudent).pipe(
         tap(() => {
-          // Fetch all students to refresh the list
           this.fetchAllStudents();
           alert('Student updated successfully.');
           this.resetForm();
@@ -137,24 +135,28 @@ export class StudentListComponent implements OnInit {
     }
   }
 
-  deleteStudent(): void {
-    if (this.studentId.trim() === '') {
-      alert('Please enter a valid student ID or roll number.');
-      return;
+  deleteStudent(student: any): void {
+    const isConfirm = window.confirm("Are you sure you are deleting the data");
+    if(isConfirm)
+     {
+        this.deletedStudent = student;
+        const studentId = this.deletedStudent.id;
+        console.log(studentId);
+        this.http.delete(`${this.apiUrl}/${studentId}`).pipe(
+          tap(() => {
+            this.fetchAllStudents();
+            alert('Student deleted successfully.');
+          }),
+          catchError(error => {
+            alert('Error deleting student.');
+            console.error('Error deleting student', error);
+            return of(null); // Ensure observable completes
+          })
+        ).subscribe();
     }
-
-    this.http.delete(`${this.apiUrl}/${this.studentId}`).pipe(
-      tap(() => {
-        // Fetch all students to refresh the list
-        this.fetchAllStudents();
-        alert('Student deleted successfully.');
-      }),
-      catchError(error => {
-        alert('Error deleting student.');
-        console.error('Error deleting student', error);
-        return of(null); // Ensure observable completes
-      })
-    ).subscribe();
+    else{
+        alert("Student not deleted");
+    }
   }
 
   onFileChange(event: any): void {
@@ -182,6 +184,7 @@ export class StudentListComponent implements OnInit {
       }
     }
 
+  //This method is use for the conversion to base 64
     private convertFileToBase64(file: File): Promise<string> {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();

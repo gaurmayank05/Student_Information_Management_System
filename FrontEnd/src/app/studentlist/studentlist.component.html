@@ -6,7 +6,7 @@
     <label for="studentId">Student ID:</label>
     <input id="studentId" [(ngModel)]="studentId" class="input-field" />
     <button (click)="fetchStudent()">Fetch Student</button>
-    <button (click)="deleteStudent()">Delete Student</button>
+    <!--<button (click)="deleteStudent()">Delete Student</button>-->
   </div>
 
   <!-- Button to fetch and show all students -->
@@ -104,7 +104,7 @@
       <th>Semester</th>
       <th>Stream</th>
       <th>Photo</th>
-      <th>Actions</th> <!-- Actions Column -->
+      <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -123,6 +123,8 @@
       </td>
       <td>
         <button (click)="selectStudentForUpdate(student)">Update</button>
+        <br><br>
+        <button style="background: red;" (click)="deleteStudent(student)">Delete</button>
       </td>
     </tr>
     </tbody>

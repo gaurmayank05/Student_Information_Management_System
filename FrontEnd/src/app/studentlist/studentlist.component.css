@@ -1,6 +1,6 @@
 /* Container for the student list page */
 .student-list {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 20px auto;
   padding: 30px;
   background: rgba(249, 249, 249, 0.9); /* Transparent light gray background */
