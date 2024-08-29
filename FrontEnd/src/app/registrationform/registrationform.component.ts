@@ -66,6 +66,8 @@ export class RegistrationformComponent implements OnInit {
           console.log('Form Submitted', response);
           alert('Form Submitted Successfully');
           this.registrationForm.reset();
+          this.photoPreview = null;
+          this.photoError = null;
           this.documentNames = [];
           this.documentError = null;
         },
