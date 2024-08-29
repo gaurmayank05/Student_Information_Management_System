@@ -50,6 +50,7 @@ public class StudentController {
     // For deleting a Student
     @DeleteMapping("/{id}")
     public ResponseEntity<List<StudentDto>> deleteStudent(@PathVariable("id") Long studentId) {
+        studentService.deleteStudent(studentId);
         List<StudentDto> student = studentService.getAllStudents();
         return ResponseEntity.ok(student);
     }
