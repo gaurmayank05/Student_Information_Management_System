@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,13 +20,13 @@ public class StudentController {
 
     // For Adding Student
     @PostMapping
-    public ResponseEntity<StudentDto> addStudent(@RequestBody StudentDto studentDto) {
+    public ResponseEntity<StudentDto> createStudent(@RequestBody StudentDto studentDto) {
         StudentDto savedStudent = studentService.createStudent(studentDto);
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
     // For Retrieving Student
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<StudentDto> getStudentById(@PathVariable("id") Long studentId) {
         StudentDto studentDto = studentService.getStudentByID(studentId);
         return ResponseEntity.ok(studentDto);
@@ -39,7 +40,7 @@ public class StudentController {
     }
 
     // For updating a Student
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<StudentDto> updateStudent(@PathVariable("id") Long studentId,
                                                     @RequestBody StudentDto updatedStudentDto) {
         StudentDto studentDto = studentService.updateStudent(studentId, updatedStudentDto);
@@ -47,9 +48,9 @@ public class StudentController {
     }
 
     // For deleting a Student
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable("id") Long studentId) {
-        studentService.deleteStudent(studentId);
-        return ResponseEntity.ok("Student deleted successfully");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<List<StudentDto>> deleteStudent(@PathVariable("id") Long studentId) {
+        List<StudentDto> student = studentService.getAllStudents();
+        return ResponseEntity.ok(student);
     }
 }

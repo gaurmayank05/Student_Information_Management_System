@@ -1,25 +1,25 @@
 package com.developer.Student_Management.mapper;
 
 import com.developer.Student_Management.dto.StudentDto;
-import com.developer.Student_Management.entity.Student;
+import com.developer.Student_Management.entity.StudentEntity;
 
 public class StudentMapper {
-    public static StudentDto mapToStudentDto(Student student) {
+    public static StudentDto mapToStudentDto(StudentEntity studentEntity) {
         return new StudentDto(
-                student.getId(),
-                student.getName(),
-                student.getAge(),
-                student.getGender(),
-                student.getRollNo(),
-                student.getCourse(),
-                student.getStream(),
-                student.getSemester(),
-                student.getStudentPhoto()
+                studentEntity.getId(),
+                studentEntity.getName(),
+                studentEntity.getAge(),
+                studentEntity.getGender(),
+                studentEntity.getRollNo(),
+                studentEntity.getCourse(),
+                studentEntity.getStream(),
+                studentEntity.getSemester(),
+                studentEntity.getStudentPhoto()
         );
     }
 
-    public static Student mapToStudent(StudentDto studentDto) {
-        return new Student(
+    public static StudentEntity mapToStudent(StudentDto studentDto) {
+        return new StudentEntity(
                 studentDto.getId(),
                 studentDto.getName(),
                 studentDto.getAge(),
