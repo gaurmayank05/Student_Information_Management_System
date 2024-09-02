@@ -59,7 +59,30 @@ export class RegistrationformComponent implements OnInit {
 
   onSubmit(): void {
     if (this.registrationForm.valid) {
-      const formData = this.registrationForm.value;
+      const formData = new FormData();
+
+      // Append non-file fields
+      formData.append('name', this.registrationForm.get('name')?.value);
+      formData.append('age', this.registrationForm.get('age')?.value);
+      formData.append('gender', this.registrationForm.get('gender')?.value);
+      formData.append('rollNo', this.registrationForm.get('rollNo')?.value);
+      formData.append('course', this.registrationForm.get('course')?.value);
+      formData.append('semester', this.registrationForm.get('semester')?.value);
+      formData.append('stream', this.registrationForm.get('stream')?.value);
+
+      // Append the Base64 encoded image
+      const studentPhoto = this.registrationForm.get('studentPhoto')?.value;
+      if (studentPhoto) {
+        formData.append('studentPhoto', studentPhoto);
+      }
+
+      // Append documents as files
+      const documents = this.registrationForm.get('documents')?.value as File[];
+      if (documents) {
+        documents.forEach((document, index) => {
+          formData.append(`documents[${index}]`, document);
+        });
+      }
 
       this.http.post(this.apiUrl, formData).subscribe({
         next: (response) => {
