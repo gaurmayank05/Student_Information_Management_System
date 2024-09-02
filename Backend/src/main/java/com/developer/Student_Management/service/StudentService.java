@@ -1,18 +1,16 @@
 package com.developer.Student_Management.service;
 
-import com.developer.Student_Management.dto.StudentDto;
+import com.developer.Student_Management.entity.StudentEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface StudentService {
+    StudentEntity saveStudent(String name, String age, String gender, Long rollNumber,
+                              String course, String semester, String photo,
+                              MultipartFile[] documents);
 
-    StudentDto createStudent(StudentDto studentDto);
+    List<StudentEntity> getAllStudents();
 
-    StudentDto getStudentByID(Long id);
-
-    List<StudentDto> getAllStudents();
-
-    StudentDto updateStudent(Long studentId, StudentDto updatedStudent);
-
-    void deleteStudent(Long studentId);
+    StudentEntity getStudentById(Long id);
 }
